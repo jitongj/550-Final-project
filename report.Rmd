@@ -1,0 +1,62 @@
+---
+title: "Influenza Vaccination Coverage in the United States"
+author: "Jitong Jiang"
+output: 
+  html_document:
+    code_folding: hide
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = TRUE,
+  message = FALSE,
+  warning = FALSE
+)
+
+library(gt)
+```
+
+## Introduction
+
+Influenza vaccination is an important public health measure for reducing the burden of seasonal influenza. In this report, I use the **Influenza Vaccination Coverage for All Ages (6+ Months)** dataset from the Centers for Disease Control and Prevention (CDC). The objective of this analysis is to examine how influenza vaccination coverage changes over the course of a flu season and how these patterns have changed across seasons. I use descriptive summaries and visualizations to compare vaccination coverage over time and across flu seasons.
+
+## Data
+
+The dataset contains monthly influenza vaccination coverage estimates across multiple flu seasons and geographic areas in the United States. It includes national, regional, state/local, and county-level estimates, as well as estimates for different age and race/ethnicity groups. The dataset also provides information such as vaccination coverage percentages, 95% confidence intervals, and sample sizes.
+
+```{r read-data}
+flu_data <- readRDS("output/flu_data.rds")
+```
+
+The dataset contains `r format(nrow(flu_data), big.mark = ",")` observations and `r ncol(flu_data) - 1` original variables.
+
+### Data Preprocessing
+
+For this analysis, I focus on national vaccination coverage for seasonal influenza among people aged 6 months and older. This provides a consistent population for comparing vaccination patterns across flu seasons. The dataset uses two different labels for this age group: `">=6 Months"` for most seasons and `"Greater than 6 Months flu"` for the 2023–24 season, so both labels are included in the filtering step.
+
+```{r data-preprocessing}
+national_overall <- readRDS("output/national_overall.rds")
+```
+
+The resulting data include 16 flu seasons from 2009–10 through 2024–25. Monthly estimates are available from August through May for the first three seasons (2009–10 through 2011–12) and from July through May for the remaining seasons. June is not included in the original dataset. Therefore, when comparing across seasons, I use May as a common reference point since it is the latest month with an available estimate for every flu season in the analysis.
+
+## Vaccination Coverage in May
+
+Table 1 summarizes the national May vaccination coverage among people aged 6 months and older for each flu season.
+
+```{r season-summary}
+season_table <- readRDS("output/season_table.rds")
+season_table
+```
+
+May vaccination coverage varied across flu seasons, ranging from 41.2% in 2009–10 to 52.1% in 2020–21. Coverage exceeded 50% from 2019–20 through 2021–22, but then decreased over the following three seasons, reaching 43.8% in 2024–25.
+
+## Vaccination Coverage Throughout the Flu Season
+
+Figure 1 shows how national influenza vaccination coverage changes throughout each flu season. Monthly estimates are ordered chronologically across the two calendar years within each flu season.
+
+```{r coverage-over-time-figure, echo=TRUE, out.width="864px"}
+knitr::include_graphics("output/coverage_over_time.png")
+```
+
+Vaccination coverage increased throughout each flu season, with the largest increases generally occurring between September and October. After November, coverage continued to increase more gradually through May. The figure also shows differences across flu seasons, particularly in the vaccination coverage reached later in each season.

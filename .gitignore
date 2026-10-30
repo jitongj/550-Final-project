@@ -1,0 +1,15 @@
+.DS_Store
+.Rhistory
+.RData
+.Ruserdata
+.Rproj.user/
+*_cache/
+*_files/
+
+report.html
+final1_dataset.html
+final2.html
+
+output/*
+!output/.gitkeep
+final1_dataset.rmd
