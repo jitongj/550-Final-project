@@ -18,3 +18,8 @@ output/coverage_over_time.png: code/generate_figure.R output/national_overall.rd
 
 clean:
 	rm -f output/*.rds output/*.png report.html
+
+.PHONY: install
+
+install:
+	Rscript -e 'renv::restore(prompt = FALSE)'
