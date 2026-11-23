@@ -23,3 +23,8 @@ clean:
 
 install:
 	Rscript -e 'renv::restore(prompt = FALSE)'
+.PHONY: docker
+
+docker:
+	mkdir -p report
+	docker run --rm --platform linux/amd64 -v "$$(pwd)/report:/project/report" jitongj/flu-vaccination-report:latest

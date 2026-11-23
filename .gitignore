@@ -13,3 +13,6 @@ final2.html
 output/*
 !output/.gitkeep
 final1_dataset.rmd
+
+report/
+Makefile.save
